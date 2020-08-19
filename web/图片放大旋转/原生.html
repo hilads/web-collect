@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .imgClass {
+            vertical-align: middle;
+            border-style: none;
+            width: 20vw;
+            cursor: crosshair;
+        }
+
+        .btnClass {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <img class="imgClass" id="imgID"
+        src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1597839216748&di=35c0848b4febe8937c4527f0ada59779&imgtype=0&src=http%3A%2F%2Ft8.baidu.com%2Fit%2Fu%3D3571592872%2C3353494284%26fm%3D79%26app%3D86%26f%3DJPEG%3Fw%3D1200%26h%3D1290"
+        alt="">
+    <button class="btnClass" id="btnID">旋转</button>
+    <script>
+        // handleCancel(e) {
+        //     this.visible = false;
+        //     var img = document.getElementById(`${this.imageSrc}`);
+        //     img.style.transform = "rotate(" + "0" + "deg)";
+        //     img.style.zoom = "normal";
+        // },
+        var current = 0
+        var img = document.getElementById('imgID');
+        var btn = document.getElementById('btnID');
+        img.addEventListener('mousewheel', zoomImg)
+        btn.addEventListener('click', spinImg)
+        function spinImg() {
+            current++;
+            let rotate = (current * 90) % 360;
+            img.style.transform = "rotate(" + rotate + "deg)";
+        };
+        function zoomImg(event) {
+            // console.log(event);
+            var zoom = parseInt(img.style.zoom, 10) || 100;
+            zoom += event.wheelDelta / 12; //可适合修改
+            // console.log(zoom);
+            if (zoom > 100 && zoom < 150) img.style.zoom = zoom + "%";
+        }
+    </script>
+</body>
+
+</html>
