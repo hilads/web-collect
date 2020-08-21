@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>密码输入框</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ant-design-vue@1.6.4/dist/antd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ant-design-vue@1.6.4/dist/antd.css">
+    <style>
+        .card_sty {
+            margin-bottom: 30px;
+        }
+
+        .input_group {
+            width: 300px;
+        }
+
+        .item_input {
+            width: 50px !important;
+            height: 50px;
+            padding: 15px 5px 20px 5px;
+            text-align: center !important;
+            font-size: 30px;
+            font-weight: 700;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <a-row>
+            <a-card hoverable class="card_sty">
+                <a-input-group class="input_group" compact>
+                    <a-input class="item_input" @click="inputClick" :max-length="1" @keyup="keyUp($event,index)"
+                        v-model="pawList[index]" v-for="(item,index) in 6" type="password" :index="index"
+                        :key="index" />
+                </a-input-group>
+            </a-card>
+        </a-row>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                pawList: [],
+                ipt: [],
+                paypassword: ''
+            },
+            mounted() {
+                this.ipt = document.querySelectorAll(".item_input");
+            },
+            methods: {
+                keyUp(e, index) {
+                    console.log(e)
+                    console.log(index)
+                    // console.log(this.paypassword)
+                    console.log(this.paypassword.length)
+                    // if (this.paypassword.length < index) {
+                    //     console.log(this.pawList)
+                    //     console.log(this.pawList[index])
+                    //     this.pawList.splice(index, 1)
+                    //     console.log(this.pawList)
+                    //     console.log(this.pawList.length)
+                    //     // this.pawList[index] = ''
+                    //     return false
+                    // }
+
+                    //删除
+                    if (e.keyCode === 8) {
+                        console.log(this.pawList.length)
+                        if (this.pawList.length > 0) {
+                            if (index != 0) {
+                                this.pawList.pop();
+                                this.ipt[index - 1].focus();
+                            }
+                        } else {
+                            if (index >= 1) {
+                                this.ipt[index - 1].focus();
+                            }
+
+                        }
+                    } else if (e.keyCode === 13) {
+                        if (this.pawList.length == 6) {
+                            this.ipt[index].blur();
+                        } else {
+                        }
+                    }
+                    // 输入
+                    else if (this.pawList.length <= 6) { //验证是否是数字 
+                        if (!/[0-9]/.test(e.key)) {
+                            this.$message.error("支付密码为数字！");
+                            this.pawList.pop(); return;
+                        } else {
+                            if (this.pawList.length < 6) {
+                                this.ipt[index + 1].focus();
+                                this.pawList.pop();
+                                this.pawList.push(e.key);
+                            } else {
+                                this.pawList.pop();
+                                this.pawList.push(e.key);
+                            }
+                        }
+                    } else { }
+                    this.paypassword = this.pawList.join("");
+                    console.log(this.paypassword);
+                }, //光标到最后一个 
+                inputClick() {
+                    if (this.pawList.length == 6) {
+                        this.ipt[this.pawList.length - 1].focus();
+                    } else {
+
+                    }
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>
