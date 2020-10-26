@@ -35,7 +35,7 @@
                 <a-input-group class="input_group" compact>
                     <a-input class="item_input" @click="inputClick" :max-length="1" @keyup="keyUp($event,index)"
                         v-model="pawList[index]" v-for="(item,index) in 6" type="password" :index="index"
-                        :key="index" />
+                        :key="index + Math.random(10000)" />
                 </a-input-group>
             </a-card>
         </a-row>
