@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下拉刷新</title>
+    <style>
+        body {
+            overflow: y-scroll;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="ul">
+        <li>1</li>
+
+    </ul>
+    <script>
+        let ul = document.getElementById('ul');
+
+        //滚动条到页面底部的距离
+        var scrollBottom
+
+        let listener = window.addEventListener('scroll', () => {
+            // 获取滚动条高度
+            if (document.documentElement && document.documentElement.scrollTop) {
+                console.log('可视窗口高度', document.documentElement.clientHeight)//可视窗口高度
+                console.log('滚动条距离顶部高度', document.documentElement.scrollTop)//滚动条距离顶部高度
+                console.log('滚动条高度/页面高度', document.documentElement.scrollHeight)
+                scrollBottom = document.documentElement.scrollHeight - document.documentElement.scrollTop - document.documentElement.clientHeight;
+                // console.log('滚动条距离底部的距离', scrollBottom)
+            } else {
+                console.log(document.body.scrollTop)
+                scrollBottom = document.body.scrollTop;
+            }
+            console.log('滚动条距离底部的距离', scrollBottom)
+            if (scrollBottom <= 100) {
+                console.log('子节点的个数', ul.childElementCount)
+                if (ul.childElementCount < 30) {
+                    let li = document.createElement('li')
+                    let liContext = document.createTextNode(`更多${Math.floor(Math.random(100) + 1)}`)
+                    li.appendChild(liContext)
+                    ul.appendChild(li)
+                }
+            }
+
+        })
+        window.onload = function () {
+            listener
+            for (let i = 0; i < 20; i++) {
+                let li = document.createElement('li')
+                let liContext = document.createTextNode(`${(i + 2)}`)
+                li.appendChild(liContext)
+                ul.appendChild(li)
+
+            }
+
+        }
+
+    </script>
+</body>
+
+</html>
