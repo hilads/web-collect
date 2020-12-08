@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>append和appendChild</title>
+</head>
+
+<body>
+    <div id="par">
+
+    </div>
+    <div id="far">
+
+    </div>
+    <script>
+        //append()
+        let par = document.getElementById('par')
+        par.append('text 这里是插入的文本内容！')
+        let p = document.createElement('p')
+        p.append('这里是插入的p标签的内容！')
+        par.append(p)
+        console.log(par.append(p))//undefined
+        let son = document.createElement('div')
+        par.append('这里是又插入内容 又插入标签', son)
+        par.append(document.createElement('br'))
+        par.append(document.createElement('br'))
+        par.append(document.createElement('br'))
+
+        //appnedChild()
+        let far = document.getElementById('far')
+        let boy = document.createElement('p')
+        // boy.appendChild('这里是boy标签里的内容！') //错误
+        let boyContext = document.createTextNode('这里是boy标签里的内容！')
+        boy.appendChild(boyContext)
+        console.log(boy.appendChild(boyContext))//返回插入的内容
+        far.appendChild(boy)
+
+    </script>
+</body>
+
+</html>

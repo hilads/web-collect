@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <div class="divClass">显示</div>
+    </div>
+    <script>
+        // 使用setTimeout模拟setInterval
+        // 可避免setInterval因执行时间导致的间隔执行时间不一致
+        setTimeout(function () {
+            // do something
+            console.log('测试111')
+            setTimeout(arguments.callee, 500, console.log('调用自身！！！'), console.log('自身1111111111'), console.log('自身1111111111'))
+        }, 500)
+    </script>
+</body>
+<style>
+    .divClass {
+        width: 200px;
+        padding: 20px;
+        border-image-slice: 30%;
+
+        border: 30px solid transparent;
+        border-image-source: url(./static/images/border-diamonds.png);
+    }
+</style>
+
+</html>
