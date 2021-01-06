@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>promise红绿灯</title>
+    <style>
+        .lightDiv {
+            border: 1px solid #333;
+            border-radius: 10px;
+            background: #333;
+            display: flex;
+            width: 60px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 8px 3px;
+        }
+
+        .light {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ffffff;
+            border-radius: 50%;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .red {
+            background: red;
+        }
+
+        .green {
+            background: green;
+        }
+
+        .yellow {
+            background: yellow;
+        }
+
+        .heart {
+            animation: heart 1s ease infinite;
+        }
+
+        @keyframes heart {
+            0% {
+                opacity: 0.1;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="lightDiv">
+        <div id="red" class="light">红</div>
+        <div id="green" class="light">绿</div>
+        <div id="yellow" class="light">黄</div>
+    </div>
+    <script>
+        // 红灯3秒亮一次，绿灯1秒亮一次，黄灯2秒亮一次；如何使用Promise让三个灯不断交替重复亮灯？
+        function red() {
+            console.log('red')
+            removeClass('green')
+            removeClass('yellow')
+            addClass('red')
+        }
+        function green() {
+            console.log('green')
+            removeClass('red')
+            removeClass('yellow')
+            addClass('green')
+        }
+        function yellow() {
+            console.log('yellow')
+            removeClass('red')
+            removeClass('green')
+            addClass('yellow')
+        }
+        function addClass(name) {
+            let idName = document.getElementById(name)
+            if (idName.className) {
+                let newName = idName.className + ` ${name}`
+                idName.className = newName
+            }
+        }
+        function removeClass(name) {
+            let idName = document.getElementById(name)
+            if (idName.className) {
+                let nameArr = idName.className.split(' ')
+                if (nameArr.indexOf(name) > 0) {
+                    nameArr.splice(nameArr.indexOf(name), 1)
+                    idName.className = nameArr.join(' ')
+                }
+
+            }
+        }
+        const light = (ms, cb) => {
+            return new Promise(resolve => (
+                setTimeout(() => {
+                    cb()
+                    resolve()
+                }, ms)
+            )
+            )
+        }
+        const openlight = () => {
+            Promise.resolve().then(() => {
+                return light(3000, red)
+            }
+            ).then(() => {
+                return light(2000, green)
+            }
+            ).then(() => {
+                return light(1000, yellow)
+            }
+            ).then(() => {
+                openlight()
+            }
+
+            )
+        }
+        openlight()
+    </script>
+</body>
+
+</html>

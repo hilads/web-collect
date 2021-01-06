@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise联系</title>
+</head>
+
+<body>
+    <script>
+
+        //基础1
+        const promise = new Promise((resolve, reject) => {
+            console.log(1)
+            // console.log(typeof resolve, resolve, resolve(),reject)
+            // resolve(1234)
+            // reject('拒绝')
+            reject()
+            console.log(2)
+        })
+        promise.then((res) => {
+            console.log(3)
+            console.log(res)
+        }, err => {
+            console.log(err)
+        }
+        ).catch(() => {
+            console.log('error')
+        })
+        console.log(4)
+
+        //  升级1
+        const first = () => (new Promise((resolve, reject) => {
+            console.log(1);
+            let p = new Promise((resolve, reject) => {
+                console.log(2)
+                setTimeout(() => {
+                    console.log(6)
+                    resolve(7)
+                })
+                resolve(4)
+            })
+            resolve(5)
+            p.then((res) => {
+                console.log(res)
+            })
+        }))
+
+        first().then((res) => {
+            console.log(res)
+        })
+        console.log(3)
+
+        // 第一轮事件循环，先执行宏任务，主script，new Promise立即执行，输出 1，
+        // 执行p这个new Promise操作，输出 2，发现setTimeout，将回调函数放入下一轮任务队列（Event Quene），
+        // p的then，暂且命名为then1，放入微任务队列，且first也有then，命名为then2，放入微任务队列。
+        // 执行console.log(3), 输出 3，宏任务执行结束。
+        // 再执行微任务，执行then1, 输出 4，执行then2, 输出 5.
+        // 第一轮事件循环结束，开始执行第二轮。
+        // 第二轮事件循环先执行宏任务里面的，也就是setTimeout的回调，输出 6.
+        // resolve(7)不会生效，因为p的Promise状态一旦改变就不会再变化了。
+
+        // 升级2
+        Promise.resolve().then(() => {
+            // return new Error('这是一个error！！！') //识别成了return Promise.resolve(new Error('这是一个error！！！'))
+            // throw new Error('这是一个error！！！')
+            return Promise.reject('这是一个error！！！')
+        }).then((res) => {
+            console.log('then----', res)
+        }).catch((err) => {
+            console.log('catch----', err)
+        })
+
+
+        // 升级3
+        Promise.resolve(1).then(2).then(Promise.resolve(3)).then(new Error('1344'))
+        // .then 或者 .catch 的参数期望是函数，传入非函数则会发生值穿透。结果为1
+
+        // 升级4
+        // 方法1
+        Promise.resolve().then(
+            (res) => {
+                throw new Error('error!!!')
+            }, err => {
+                console.error('err', err)
+            }
+        ).catch(catchErr => {
+            console.error('catchErr', catchErr)
+        })
+        // 方法2
+        Promise.resolve().then(
+            (res) => {
+                throw new Error('error!!!')
+            }, err => {
+                console.error('err', err)
+            }
+        ).then(
+            res1 => {
+                console.log('res1', res1)
+            }, err1 => {
+                console.log('err1', err1)
+            }
+        )
+        // .then 可以接收两个参数，第一个是处理成功的函数，第二个是处理错误的函数。
+        // .catch 是.then 第二个参数的简便写法，但是它们用法上有一点需要注意：
+        // .then 的第二个处理错误的函数捕获不了第一个处理成功的函数抛出的错误，
+        // 而后续的.catch 可以捕获之前的错误。
+        // 以上两种方法均可
+
+        // 升级5
+        console.log('script start');
+
+        setTimeout(function () {
+            console.log('setTimeout');
+        }, 0);
+
+        Promise.resolve().then(function () {
+            console.log('promise1');
+        }).then(function () {
+            console.log('promise2');
+        });
+
+        console.log('script end');
+        // 以上打印的结果依次为：
+        // script start
+        // script end
+        // promise1
+        // promise2
+        // setTimeout
+
+    </script>
+</body>
+
+</html>

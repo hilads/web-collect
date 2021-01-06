@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数组去重</title>
+</head>
+
+<body>
+    <script>
+        //方法一
+        // const array = [1, 1, 2, 3, 5, 5, 1]
+        // Array.from(new Set(array))
+        // console.log(array)
+
+        //方法二
+        // const array = [1, 1, 2, 3, 5, 5, 1]
+        // let filterArr = array.filter(
+        //     function (arr, index) {
+        //         console.log('array.indexOf(arr)', array.indexOf(arr))
+        //         console.log('index', index)
+        //         return array.indexOf(arr) === index
+        //     }
+        // )
+        // console.log(filterArr)
+
+        //方法三
+        const array = [1, 1, 2, 3, 5, 5, 1]
+        const uniqueArray = [...new Set(array)]
+        console.log(uniqueArray)
+
+    </script>
+</body>
+
+</html>

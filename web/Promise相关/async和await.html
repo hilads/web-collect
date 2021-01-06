@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>async和await</title>
+</head>
+
+<body>
+    <div id="ul">
+
+    </div>
+</body>
+<script>
+    function getData() {
+        return ['1', '2', '3', '4', '5', '6']
+        // setTimeout(() => {
+        //     console.log('settimeout')
+        //     return ['1', '2', '3', '4', '5', '6']
+        // }, 1000)
+    }
+
+    function showList(list) {
+        const ul = document.getElementById(ul);
+        ul.innerHTML = list.map(text => `
+    <li class="li">${text}</li>
+  `).join(
+        );
+    }
+
+    function addEvent() {
+        const list = document.getElementsByClassName(li);
+        for (let i = 0; i < list.length; i++) {
+            list[i].addEventListener(focus, () => {
+                // do something
+            });
+        }
+    }
+
+    window.onload = function () {
+        console.log('34444444444444444444444444')
+        async function main() {
+            console.log('3244')
+            const list = await getData(); // 获取数据
+            showList(list); // 显示页面
+            addEvent(); // 添加事件
+        }
+    }
+</script>
+
+</html>

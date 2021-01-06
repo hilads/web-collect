@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tasks和microtasks</title>
+    <style>
+        .outer {
+            height: 100px;
+            background: pink;
+        }
+
+        .inner {
+            height: 50px;
+            background: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="outer">
+        <div class="inner"></div>
+    </div>
+</body>
+<script>
+    // Let's get hold of those elements
+    var outer = document.querySelector('.outer');
+    var inner = document.querySelector('.inner');
+
+    // Let's listen for attribute changes on the
+    // outer element
+    new MutationObserver(function () {
+        console.log('mutate');
+    }).observe(outer, {
+        attributes: true
+    });
+
+    // Here's a click listener…
+    function onClick() {
+        console.log('click');
+
+        setTimeout(function () {
+            console.log('timeout');
+        }, 0);
+
+        Promise.resolve().then(function () {
+            console.log('promise');
+        });
+
+        outer.setAttribute('data-random', Math.random());
+    }
+
+    // …which we'll attach to both elements
+    inner.addEventListener('click', onClick);
+    outer.addEventListener('click', onClick);
+
+    //Promise callback 和 Mutation observers 是Microtasks  
+    //setTimeout callback 是tasks
+    // 正常tasks 执行 然后有setTimeout callback 放入tasks 待执行
+    // 正常tasks 执行完后开始执行Microtasks 即Promise callback 执行完后 再执行tasks
+</script>
+
+</html>

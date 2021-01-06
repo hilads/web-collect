@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>判断数组的和为一个数</title>
+</head>
+
+<body>
+    <script>
+        //判断数组的和为一个数 用加减 组合 结果为761的情况
+        // "{a[n]:[123,130,31,183,188,6,56,126,141,73,64,109,14,31,137,42,81,17,3,114],s:761}";
+        // var a = [123, 130, 31, 183, 188, 6, 56, 126, 141, 73, 64, 109, 14, 31, 137, 42, 81, 17, 3, 114];
+        // var fhArr = []
+        // var s = 761;
+        // var resultArr = []
+        // var resultStr = ''
+        // function getSum(total, num, index) {
+        //     let plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+        //     fhArr.push(plusOrMinus)
+        //     return total + plusOrMinus * num;
+        // }
+        // function getArr() {
+        //     fhArr = []
+        //     resultArr = []
+        //     resultStr = ''
+        //     let sum = a.reduce(getSum, 0)
+        //     console.log(sum)
+        //     if (sum === 761) {
+        //         console.log(fhArr)
+        //         getResult()
+        //     } else {
+        //         getArr()
+        //     }
+        // }
+        // function getResult() {
+        //     for (let i = 0; i < a.length && i < fhArr.length; i++) {
+        //         resultArr.push(a[i] * fhArr[i])
+        //     }
+        //     console.log(resultArr)
+        //     resultArr.forEach((item, index) => {
+        //         if (item > 0) {
+        //             if (index === 0) {
+        //                 resultStr = resultStr + item
+        //             } else {
+        //                 resultStr = resultStr + '+' + item
+        //             }
+        //         } else {
+        //             resultStr = resultStr + '' + item
+        //         }
+        //     })
+        //     console.log(resultStr)
+        // }
+        // window.onload = function () {
+        //     getArr()
+        // }
+
+
+        // var a = [123, 130, 31, 183, 188, 6, 56, 126, 141, 73, 64, 109, 14, 31, 137, 42, 81, 17, 3, 114];
+        // var s = 761;
+        // var fhArr = []
+        // function getArr(arr) {
+        //     let len = arr.length;
+        //     fhArr = Array.from(Array(len),x => 1)
+        //     console.log(fhArr)
+        // }
+        // window.onload = function () {
+        //     getArr(a)
+        // }
+
+
+        function product(arr1, arr2) {
+            var sum = 0;
+            for (let i = 0; i < arr1.length; i++) {
+                sum = sum + arr1[i] * arr2[i];
+            }
+            return sum
+
+        }
+        function display(arr, arr1) {
+            let res = ''
+            if (arr1[0] == 1) {
+                // console.log('1')
+            } else {
+                // console.log('-1')
+            }
+            for (let i = 0; i < arr.length; i++) {
+                if (arr1[i] == 1) {
+                    // console.log('+',arr[i])
+                    res += '+' + arr[i]
+                } else {
+                    // console.log('-',arr[i])
+                    res += '-' + arr[i]
+                }
+            }
+            console.log(res)
+            console.log(count)
+
+        }
+        function seekString(arr, s, flag_indx, arr1) {
+            console.log('flag_indx首先的',flag_indx)
+            if (flag_indx == arr.length) {
+                if (product(arr, arr1) == s) {
+                    count++
+                    display(arr, arr1)
+                }
+                return ''
+            }
+            console.log('flag_indx上',flag_indx)
+            arr1[flag_indx] = 1;
+            seekString(arr, s, flag_indx + 1, arr1)
+            // console.log('arr1', arr1)
+            console.log('flag_indx---------下',flag_indx)
+            arr1[flag_indx] = -1;
+            seekString(arr, s, flag_indx + 1, arr1)
+            // console.log('arr1', arr1)
+        }
+        // let arr = [1, 1, 1, 1]
+        // let arr1 = [0,0,0,0]
+        // let s = 2
+        let arr = [123, 130, 31, 183, 188, 6, 56, 126, 141, 73, 64, 109, 14, 31, 137, 42, 81, 17, 3, 114]
+        let arr1 = [0, 0, 0, 0]
+        let s = 761
+        let flag_indx = 0;
+        let count = 0
+        seekString(arr, s, flag_indx, arr1)
+
+
+    </script>
+</body>
+
+</html>
