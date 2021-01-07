@@ -14,23 +14,30 @@
 </body>
 <script>
     function getData() {
-        return ['1', '2', '3', '4', '5', '6']
-        // setTimeout(() => {
-        //     console.log('settimeout')
-        //     return ['1', '2', '3', '4', '5', '6']
-        // }, 1000)
+        // return ['1', '2', '3', '4', '5', '6']
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve(['1', '2', '3', '4', '5', '6'])
+            }, 1000)
+
+        }).then(
+            res => {
+                console.log('res', res)
+                return res
+            }
+
+        )
+
     }
 
     function showList(list) {
-        const ul = document.getElementById(ul);
-        ul.innerHTML = list.map(text => `
-    <li class="li">${text}</li>
-  `).join(
-        );
+        console.log('list', list)
+        const ul = document.getElementById('ul');
+        ul.innerHTML = list.map(text => `<li class="li">${text}</li>`).join('');
     }
 
     function addEvent() {
-        const list = document.getElementsByClassName(li);
+        const list = document.getElementsByClassName('li');
         for (let i = 0; i < list.length; i++) {
             list[i].addEventListener(focus, () => {
                 // do something
@@ -38,14 +45,16 @@
         }
     }
 
+    async function main() {
+        console.log('3244')
+        // console.log(getData())
+        const list = await getData(); // 获取数据
+        console.log(list)
+        showList(list); // 显示页面
+        addEvent(); // 添加事件
+    }
     window.onload = function () {
-        console.log('34444444444444444444444444')
-        async function main() {
-            console.log('3244')
-            const list = await getData(); // 获取数据
-            showList(list); // 显示页面
-            addEvent(); // 添加事件
-        }
+        main()
     }
 </script>
 

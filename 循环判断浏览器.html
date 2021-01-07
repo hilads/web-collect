@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>循环判断浏览器</title>
+</head>
+
+<body>
+    <script>
+        function getBrowser() {
+            const str = navigator.userAgent;
+            console.log(str)
+            const list = [
+                { key: 'QQBrowser', browser: 'qq' },
+                { key: 'Chrome', browser: 'chrome' },
+                { key: 'Safari', browser: 'safari' },
+                { key: 'Firefox', browser: 'firefox' },
+                { key: 'Opera', browser: 'opera' },
+                { key: 'msie', browser: 'ie' },
+            ];
+            for (let i = 0; i < list.length; i++) {
+                const item = list[i];
+                if (str.includes(item.key)) {
+                    console.log(item.browser)
+                    return item.browser
+                };
+            }
+            console.log('other')
+            return 'other';
+        }
+        window.onload = function () {
+            getBrowser()
+        }
+    </script>
+</body>
+
+</html>
