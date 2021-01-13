@@ -15,20 +15,55 @@
         // console.log(array)
 
         //方法二
-        // const array = [1, 1, 2, 3, 5, 5, 1]
-        // let filterArr = array.filter(
-        //     function (arr, index) {
-        //         console.log('array.indexOf(arr)', array.indexOf(arr))
-        //         console.log('index', index)
-        //         return array.indexOf(arr) === index
-        //     }
-        // )
-        // console.log(filterArr)
+        const array = [1, 1, 2, 3, 5, 5, 1]
+        let filterArr = array.filter(
+            function (arr, index) {
+                console.log('array.indexOf(arr)', array.indexOf(arr))
+                console.log('index', index)
+                return array.indexOf(arr) === index
+            }
+        )
+        console.log(filterArr)
 
         //方法三
-        const array = [1, 1, 2, 3, 5, 5, 1]
-        const uniqueArray = [...new Set(array)]
-        console.log(uniqueArray)
+        // const array = [1, 1, 2, 3, 5, 5, 1]
+        // const uniqueArray = [...new Set(array)]
+        // console.log(uniqueArray)
+
+
+        //--------------------------------------------------------------------------------------------------
+        // 拓展 Array.from
+
+        // 将两类对象转为真正的数组：1,类似数组的对象 2,可遍历（iterable）的对象（包括 ES6 新增的数据结构 Set 和 Map）
+        let arrayLike = {
+            '0': 'a',
+            '1': 'b',
+            '2': 'c',
+            length: 3
+        }
+        let arr2 = Array.from(arrayLike)  // ['a', 'b', 'c']
+        console.log(arr2)
+
+        // 还可以接受第二个参数，用来对每个元素进行处理，将处理后的值放入返回的数组
+        let arr3 = Array.from([2, 4, 5], x => Math.pow(x, 3))
+        console.log(arr3)
+
+
+        //--------------------------------------------------------------------------------------------------
+        // 拓展 Array.of()
+        // 用于将一组值，转换为数组
+
+        // 没有参数的时候，返回一个空数组
+        // 当参数只有一个的时候，单一数组
+        // 参数个数不少于 2 个时，Array()才会返回由参数组成的新数组
+
+        Array.of() // []
+        Array.of(3) // [3]
+        Array.of(3, 11, 8) // [3, 11, 8]
+
+        Array() // []
+        Array(3) // [, , ,]
+        Array(3, 11, 8) // [3, 11, 8]
 
     </script>
 </body>
