@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dom节点查找</title>
+</head>
+<!-- 查找两个节点的最近的一个共同父节点，可以包括节点自身 -->
+<!-- contains() 判断是否包含某个节点 是为true fou为 false -->
+
+<body>
+    <div>
+        <div id="level2">
+            <div id="level4par">
+                <div id="level4">4级别</div>
+            </div>
+            <div id="level3">3级别</div>
+        </div>
+    </div>
+    <script>
+        function commonParentNode(oNode1, oNode2) {
+            if (oNode2.contains(oNode1)) {
+                return oNode2;
+            }
+            for (; oNode1; oNode1 = oNode1.parentNode) {
+                console.log(oNode1)
+                if (oNode1.contains(oNode2)) {
+                    console.log(oNode1)
+                    return oNode1;
+                }
+            }
+        }
+        let node1 = document.getElementById('level4')
+        let node2 = document.getElementById('level3')
+        commonParentNode(node1, node2)
+    </script>
+</body>
+
+</html>

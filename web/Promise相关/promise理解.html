@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 要求实现请求超时功能，即，5 秒内的返回数据，正常执行 then，5 秒后的返回数据，忽略，并在 5 秒的时候，执行 catch
+        const ajax = function () {
+            return new Promise((resolve, reject) => {
+                // setTimeout 模拟异步请求
+                const currentDelay = Math.random() * 10000;
+                console.log(`本次模拟异步请求预期耗费时间${currentDelay}ms`)
+                if (currentDelay > 5000) {
+                    setTimeout(() => {
+                        const result = '大于5秒 返回错误';
+                        reject(result)
+                    }, 5000)
+                } else {
+                    setTimeout(() => {
+                        const result = '异步返回数据（测试用）';
+                        resolve(result)
+                    }, currentDelay)
+                }
+
+
+            })
+        }
+        ajax().then(result => {
+            // result 的值，应该为【异步返回数据（测试用）】
+            console.log('setTimeout 在 5 秒内触发时，执行本句代码', result)
+        }).catch(err => {
+            console.log('setTimeout 预期执行时间大于 5 秒时，将在 5 秒的时候，执行本句代码', err)
+        })
+    </script>
+</body>
+
+</html>
